@@ -1,10 +1,5 @@
-import MovieList from "@/components/MovieList";
+import App from "@/components/App";
 
-export default function Home() {
-  return (
-    <>
-      <h1>Default home page</h1>
-      <MovieList />
-    </>
-  );
+export default function Root() {
+  return <App />;
 }

@@ -2,120 +2,88 @@
 
 import { Component } from "react";
 
-// It will be used purely for type-checking during compilation
-interface MovieCardState {
-  title: string;
-  plot: string;
-  price: string;
-  rating: number;
-  stars: number;
-  favourite: boolean;
-  incart: boolean;
+interface MovieCardProps {
+  movie: {
+    id: number;
+    title: string;
+    plot: string;
+    price: string;
+    rating: number;
+    poster: string;
+    stars: number;
+    favourite: boolean;
+    incart: boolean;
+  };
+
+  onAddStars: (id: number) => void;
+  onRemoveStars: (id: number) => void;
+  onFavourite: (id: number) => void;
+  onCart: (id: number) => void;
 }
 
-class MovieCard extends Component<{}, MovieCardState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      title: "The Dark Knight",
-      plot: "Batman raises the stakes in his war on crime with the help of Lt. Jim Gordon and DA Harvey Dent, until a criminal mastermind known as the Joker thrusts Gotham into anarchy.",
-      price: "$9.99",
-      rating: 8.5,
-      stars: 0,
-      favourite: true,
-      incart: true,
-    };
-  }
-
-  addStars = () => {
-    if (this.state.stars >= 5.0) {
-      return;
-    }
-    this.setState(
-      (prevState) => ({
-        stars: prevState.stars + 0.5,
-      }) /*,
-      () => console.log(this.state.stars),*/,
-    );
-  };
-
-  removeStars = () => {
-    if (this.state.stars <= 0.0) {
-      return;
-    }
-    this.setState(
-      (prevState) => ({
-        stars: prevState.stars - 0.5,
-      }) /*,
-      () => console.log(this.state.stars),*/,
-    );
-  };
-
-  handleFavourite = () => {
-    this.setState({
-      favourite: !this.state.favourite,
-    });
-  };
-
-  handleCart = () => {
-    this.setState({
-      incart: !this.state.incart,
-    });
-  };
-
+class MovieCard extends Component<MovieCardProps> {
   render() {
-    const { title, plot, price, rating, stars, favourite, incart } = this.state;
+    const { id, title, plot, price, rating, poster, stars, favourite, incart } =
+      this.props.movie;
+
     return (
       <div className="main">
         <div className="movie-card">
           <div className="left">
-            <img
-              src="https://m.media-amazon.com/images/I/81IfoBox2TL.jpg"
-              alt="Poster"
-            />
+            <img src={poster} alt={`${title} Poster`} />
           </div>
+
           <div className="right">
             <div className="title">{title}</div>
             <div className="plot">{plot}</div>
             <div className="price">{price}</div>
+
             <div className="footer">
-              <div className="rating">{rating}</div>
-              <div className="star-dis">
-                <div>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/17236/17236423.png"
-                    alt="Rating increase"
-                    className="str-btn"
-                    onClick={this.addStars}
-                  />
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png"
-                    alt="Rating star"
-                    className="stars"
-                  />
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/128/1828/1828779.png"
-                    alt="Rating increase"
-                    className="str-btn"
-                    onClick={this.removeStars}
-                  />
-                  <span className="starCount">{stars}</span>
-                </div>
+              <div className="rating">
+                <span>{rating}</span>
               </div>
-              <button
-                className={favourite ? "favourite-btn" : "unfavourite-btn"}
-                type="button"
-                onClick={this.handleFavourite}
-              >
-                {favourite ? "Favourite" : "Un-Favourite"}
-              </button>
-              <button
-                className={incart ? "cart-btn" : "uncart-btn"}
-                type="button"
-                onClick={this.handleCart}
-              >
-                {incart ? "Add to Cart" : "Remove from Cart"}
-              </button>
+
+              <div className="star-dis">
+                <button
+                  type="button"
+                  className="star-btn"
+                  onClick={() => this.props.onRemoveStars(id)}
+                  aria-label="Decrease stars"
+                >
+                  −
+                </button>
+
+                <span className="stars">★</span>
+
+                <button
+                  type="button"
+                  className="star-btn"
+                  onClick={() => this.props.onAddStars(id)}
+                  aria-label="Increase stars"
+                >
+                  +
+                </button>
+
+                <span className="starCount">{stars}</span>
+              </div>
+
+              <div className="footer-actions">
+                <button
+                  className={favourite ? "unfavourite-btn" : "favourite-btn"}
+                  type="button"
+                  onClick={() => this.props.onFavourite(id)}
+                >
+                  {favourite ? "Un-Favourite" : "Favourite"}
+                </button>
+
+                <button
+                  className={incart ? "uncart-btn" : "cart-btn"}
+                  type="button"
+                  onClick={() => this.props.onCart(id)}
+                >
+                  {incart ? "Remove from Cart" : "Add to Cart"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
