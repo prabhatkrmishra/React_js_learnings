@@ -74,6 +74,7 @@ const CartText = styled.span`
 `;
 /********************** ***************** **********************/
 
+/********************** Inline Styling **********************/
 const styles: Record<string, CSSProperties> = {
   cartContainer: {
     display: "flex",
@@ -92,3 +93,4 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: "center",
   },
 } satisfies Record<string, React.CSSProperties>;
+/********************** ************** **********************/
