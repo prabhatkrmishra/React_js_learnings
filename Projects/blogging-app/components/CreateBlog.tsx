@@ -7,7 +7,7 @@ import {
 } from "react";
 
 interface CreateBlogProps {
-  handleSaveBlog: (blogTitle: string, blogContent: string) => void;
+  handleSaveBlog: (blogTitle: string, blogContent: string) => Promise<void>;
 }
 
 const CreateBlog = (props: CreateBlogProps) => {
@@ -33,9 +33,9 @@ const CreateBlog = (props: CreateBlogProps) => {
     blogTitleRef.current?.focus();
   }, []);
 
-  const handleOnSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    props.handleSaveBlog(blogTitle, blogContent);
+    await props.handleSaveBlog(blogTitle, blogContent);
     setBlogTitle("");
     setBlogContent("");
     blogTitleRef.current?.focus();

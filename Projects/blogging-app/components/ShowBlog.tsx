@@ -3,7 +3,7 @@ import BlogCard from "./BlogCard";
 
 interface BlogArrayProp {
   blogArray: BlogObject[];
-  handleDeleteBlog: (index: number) => void;
+  handleDeleteBlog: (blogId: string) => Promise<void>;
 }
 
 const ShowBlog = (props: BlogArrayProp) => {
@@ -21,7 +21,7 @@ const ShowBlog = (props: BlogArrayProp) => {
           <BlogCard
             index={index}
             blog={blog}
-            handleDeleteBlog={props.handleDeleteBlog}
+            handleDeleteBlog={() => props.handleDeleteBlog(blog.id)}
           />
         </li>
       ))}

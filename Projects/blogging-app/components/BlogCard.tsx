@@ -3,7 +3,7 @@ import type { BlogObject } from "./Home";
 interface BlogCardProps {
   index: number;
   blog: BlogObject;
-  handleDeleteBlog: (index: number) => void;
+  handleDeleteBlog: () => void;
 }
 
 const BlogCard = (props: BlogCardProps) => {
@@ -13,7 +13,7 @@ const BlogCard = (props: BlogCardProps) => {
         <p className="text-sm text-muted">Blog Id: {props.index}</p>
         <button
           type="button"
-          onClick={() => props.handleDeleteBlog(props.index)}
+          onClick={props.handleDeleteBlog}
           aria-label={`Delete blog: ${props.blog.title}`}
           className="-mt-1 shrink-0 rounded-md border border-border px-2 py-1 text-xs font-medium text-muted hover:border-red-500 hover:bg-red-500 hover:text-white"
         >
